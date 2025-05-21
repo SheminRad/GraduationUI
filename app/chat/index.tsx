@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, Stack } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -17,7 +17,7 @@ import {
 import ROBOT_LOGO from '../../assets/images/ROBOT_LOGO.png';
 import { Ionicons } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 // Make the logo 25% of screen width:
 const LOGO_SIZE = SCREEN_WIDTH * 0.25;
@@ -35,10 +35,22 @@ export default function ChatScreen() {
   const OLLAMA_URL   = 'http://jetson.local:11434/api/generate';
   const MODEL_NAME   = 'llama3.2:1b'; 
 
+
+   useEffect(() => {
+    (async () => {
+      const saved = await AsyncStorage.getItem('chat_history');
+      if (saved) setMessages(JSON.parse(saved));
+    })();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('chat_history', JSON.stringify(messages));
+  }, [messages]);
+  
   // This function sends the user message and calls the Ollama API
   const onSend = async () => {
     if (!userMessage.trim()) return;
-
+    
     // Create a new message from the user and add it to state
     const newMessage = { 
       id: Date.now().toString(),
