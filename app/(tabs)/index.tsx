@@ -1,8 +1,8 @@
+// HomeScreen.tsx
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { Link, router } from 'expo-router';
-import { Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { Link } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   return (
@@ -24,15 +24,22 @@ export default function HomeScreen() {
         Let’s power your home smarter, greener, and more efficiently!
       </Text>
 
-      {/* "Get Started" Button -> Navigates to Chat Screen */}
+      {/* Get Started with gradient, shadow & press-scale */}
       <Link href="/chat" asChild>
-        <Pressable 
+        <Pressable
           style={({ pressed }) => [
-            styles.button, 
-            pressed && styles.buttonPressed
+            styles.buttonWrapper,
+            pressed && { transform: [{ scale: 0.97 }] },
           ]}
         >
-          <Text style={styles.buttonText}>Get Started</Text>
+          <LinearGradient
+            colors={['#4ADE80', '#10B981']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.buttonGradient}
+          >
+            <Text style={styles.buttonText}>Get Started</Text>
+          </LinearGradient>
         </Pressable>
       </Link>
     </View>
@@ -42,13 +49,10 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D1FAE5', // A light mint green
+    backgroundColor: '#D1FAE5', // light mint green
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
-  },
-  buttonPressed: {
-    opacity: 0.7,
   },
   title: {
     fontSize: 24,
@@ -67,12 +71,24 @@ const styles = StyleSheet.create({
     color: '#065F46',
     textAlign: 'center',
   },
-  button: {
-    marginTop: 16,
-    backgroundColor: '#10B981',
-    paddingHorizontal: 30,
-    paddingVertical: 12,
-    borderRadius: 25,
+
+  // wrap pressable so we can add shadow + press-scale
+  buttonWrapper: {
+    marginTop: 24,
+    borderRadius: 30,
+    // drop shadow (iOS)
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    // drop shadow (Android)
+    elevation: 4,
+  },
+  buttonGradient: {
+    paddingVertical: 14,
+    paddingHorizontal: 36,
+    borderRadius: 30,
+    alignItems: 'center',
   },
   buttonText: {
     color: '#FFF',

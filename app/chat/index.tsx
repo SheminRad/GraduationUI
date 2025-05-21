@@ -16,6 +16,11 @@ import {
 } from 'react-native';
 import ROBOT_LOGO from '../../assets/images/ROBOT_LOGO.png';
 import { Ionicons } from '@expo/vector-icons';
+import { Dimensions } from 'react-native';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+// Make the logo 25% of screen width:
+const LOGO_SIZE = SCREEN_WIDTH * 0.25;
 type Message = {
   id: string;
   text: string;
@@ -121,7 +126,10 @@ export default function ChatScreen() {
           <ScrollView contentContainerStyle={styles.scrollContent}>
             {/* Optional: Top logo/header */}
             <View style={styles.logoContainer}>
-              <Image source={ROBOT_LOGO} style={styles.logo} />
+              <Image source={ROBOT_LOGO} style={[
+    styles.logo,
+    { width: LOGO_SIZE, height: LOGO_SIZE }
+  ]} />
             </View>
 
             {messages.map(message => (
@@ -212,8 +220,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
+    bottom: 6,
+    left: 6,
     right: 0,
     flexDirection: 'row',
     backgroundColor: '#fff',
