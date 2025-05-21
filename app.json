@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ExpoAppNew",
-    "slug": "ExpoAppNew",
+    "slug": "gradversion2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +24,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fa919273-46f8-432c-a741-11dd3b1a8702"
+      }
+    },
+    "owner": "sheminrad"
   }
 }

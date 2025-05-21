@@ -1,10 +1,11 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import React, { useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -14,6 +15,7 @@ import {
   View
 } from 'react-native';
 import ROBOT_LOGO from '../../assets/images/ROBOT_LOGO.png';
+import { Ionicons } from '@expo/vector-icons';
 type Message = {
   id: string;
   text: string;
@@ -106,6 +108,16 @@ export default function ChatScreen() {
       >
         <SafeAreaView style={{ flex: 1 }}>
           {/* Chat messages list */}
+            <Pressable
+              onPress={() => router.back()}
+              style={({ pressed }) => [
+                styles.backButton,
+                pressed && { opacity: 0.6 }
+              ]}
+            >
+              <Ionicons name="arrow-back" size={24} color="#10B981" />
+              <Text style={styles.backButtonText}>Back</Text>
+            </Pressable>
           <ScrollView contentContainerStyle={styles.scrollContent}>
             {/* Optional: Top logo/header */}
             <View style={styles.logoContainer}>
@@ -151,6 +163,16 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+    backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+  },
+  backButtonText: {
+    marginLeft: 6,
+    fontSize: 16,
+    color: '#10B981',
   },
   scrollContent: {
     paddingHorizontal: 16,
