@@ -33,7 +33,7 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<Message[]>([]);
   const FORECAST_URL = 'http://jetson.local:7000/predict';
   const OLLAMA_URL   = 'http://jetson.local:11434/api/generate';
-  const MODEL_NAME   = 'llama3.2:1b'; 
+  const MODEL_NAME   = 'hf.co/EmreGed/sunergy8bit8e';
 
 
    useEffect(() => {
@@ -73,13 +73,13 @@ export default function ChatScreen() {
     /* 3️⃣ Build the final prompt */
     const prompt = `Given that the expected energy usage is ${usage_wh} Wh `
                  + `and expected solar generation is ${generation_wh} Wh `
-                 + `for the next ${timeframe}, how can the user optimize energy consumption?`;
+                 + `with the current time ${Date.now().toString()} ${userMessage}?`;
 
-    const response = await fetch('http://jetson.local:11434/api/generate', {
+    const response = await fetch( 'http://jetson.local:11434/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'llama3.2:1b',          // pick the model you want
+        model: MODEL_NAME,          // pick the model you want
         prompt: prompt,
         stream: true            // easier to parse for now
       }),
